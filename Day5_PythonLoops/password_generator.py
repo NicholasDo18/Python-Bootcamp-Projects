@@ -22,3 +22,11 @@ for i in range(0, nr_numbers):
 
 print(password)
 
+#hard version-no pattern. Complete mixed up.
+#To use random.shuffle, you need a list
+#we convert our string to a list so we can use this method
+convert_list = list(password)
+random.shuffle(convert_list)
+#Now we need to combine the list together to make one string
+random_password = "".join(convert_list)
+print(random_password)
