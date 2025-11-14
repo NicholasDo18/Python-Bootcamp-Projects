@@ -1,23 +1,54 @@
 import random
-word_list = ["aardvark", "baboon", "camel"]
+import hangman_words
+import hangman_art
 
+word_list = hangman_words.word_list
+lives = 6
+
+print(hangman_art.logo)
 chosen_word = random.choice(word_list)
-print(chosen_word)
+#print(chosen_word)
 
-# TODO-1: Create a "placeholder" with the same number of blanks as the chosen_word
 placeholder = ""
-for character in chosen_word: #adds blank lines for each character for our chosen word
+word_length = len(chosen_word)
+for position in range(word_length):
     placeholder += "_"
+print("Word to guess: " + placeholder)
 
-print(placeholder)
-guess = input("Guess a letter: ").lower()
+game_over = False
+correct_letters = []
 
-# TODO-2: Create a "display" that puts the guess letter in the right positions and _ in the rest of the string.
-display = ""
-for letter in chosen_word: #This loops through each letter in the chosen word
-    if guess == letter: #If our guess was correct, it would be added to the display
-        display += letter
-    else: #otherwise, it just adds a blank if we didn't guess right
-        display += "_"
+while not game_over:
 
-print(display)
+    print("****************************" + str(lives) + "/6 LIVES LEFT****************************")
+    guess = input("Guess a letter: ").lower()
+
+    if guess in correct_letters:
+        print("You've already guessed " + guess + ". Try again.")
+    display = ""
+
+    for letter in chosen_word:
+        if letter == guess:
+            display += letter
+            correct_letters.append(guess)
+        elif letter in correct_letters:
+            display += letter
+        else:
+            display += "_"
+
+    print("Word to guess: " + display)
+
+    if guess not in chosen_word:
+        print("You guessed " + guess + ", that's not in the word. You lose a life.")
+        lives -= 1
+
+        if lives == 0:
+            game_over = True
+            print(f"***********************IT WAS " + chosen_word + "! YOU LOSE**********************")
+
+    if "_" not in display:
+        game_over = True
+        print("****************************YOU WIN****************************")
+
+    print(hangman_art.stages[lives])
+
