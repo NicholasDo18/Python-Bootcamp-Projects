@@ -1,6 +1,7 @@
-import random
+import random, art
 
 def game():
+	print(art.logo)
 	print("Welcome to the Number Guessing Game!")
 	print("I'm thinking of a number between 1 and 100.")
 
